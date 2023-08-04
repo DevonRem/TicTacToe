@@ -35,6 +35,7 @@ const player2 = playerFactory('O');
 
 player1.player();
 player2.player();
+let turn = player1.player();
 
 const gameLogic = () => {
     const mouseover = () => {
@@ -54,11 +55,26 @@ const gameLogic = () => {
     const mouseclick = () => {
         container.addEventListener('click', function(e){
             if (e.target.innerText === '') {
-                e.target.innerText = player1.player();
+                e.target.innerText = turn;
                 e.target.style.background = 'white';
+                changeTurn();
                 }
         });
-    }
+    };
+
+
+    const changeTurn = () => {
+        if (turn === player1.player()) {
+            turn = player2.player();
+        }
+        else {
+            turn = player1.player();
+        }
+    };
+
+    const gameOver = () => {
+        
+    };
     return { mouseover, mouseclick };
 }
 
