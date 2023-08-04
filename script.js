@@ -14,6 +14,7 @@ const gameBoard = (() => {
                 row.appendChild(col);
             }
         }
+
     }
     
     return {
@@ -25,20 +26,43 @@ gameBoard.create();
 
 
 const playerFactory = (playerToken) => {
-    const player = () => console.log(playerToken);
+    const player = () => playerToken;
     return { player };
 }
 
-const player1 = playerFactory('x');
+const player1 = playerFactory('X');
+const player2 = playerFactory('O');
 
 player1.player();
+player2.player();
 
-container.addEventListener('mouseover', function(e) {
-    e.target.style.background = 'grey';
-});
+const gameLogic = () => {
+    const mouseover = () => {
+        container.addEventListener('mouseover', function(e) {
+            if (e.target.innerText === '') {
+            e.target.style.background = 'grey';
+            }
+        });
+        
+        container.addEventListener('mouseout', function(e) {
+            if (e.target.innerText === '') {
+            e.target.style.background = 'white';
+            }
+        });
+    };
 
-container.addEventListener('mouseout', function(e) {
-    if (e.target.style.background !== 'black') {
-    e.target.style.background = 'white';
+    const mouseclick = () => {
+        container.addEventListener('click', function(e){
+            if (e.target.innerText === '') {
+                e.target.innerText = player1.player();
+                e.target.style.background = 'white';
+                }
+        });
     }
-});
+    return { mouseover, mouseclick };
+}
+
+const control = gameLogic();
+control.mouseover();
+control.mouseclick();
+
