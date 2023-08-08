@@ -1,4 +1,5 @@
 const container = document.querySelector('.container');
+const restartbtn = document.querySelector('.restartbtn');
 
 const gameBoard = (() => {
     const create = () => {
@@ -25,17 +26,19 @@ const gameBoard = (() => {
 gameBoard.create();
 
 
-const playerFactory = (playerToken) => {
+const playerFactory = (name, playerToken) => {
     const player = () => playerToken;
-    return { player };
+    const Name = () => name;
+    return { player, Name };
 }
 
-const player1 = playerFactory('X');
-const player2 = playerFactory('O');
+const player1 = playerFactory(prompt("Enter your name for player1"),'X');
+const player2 = playerFactory(prompt("Enter your name for player2"), 'O');
 
 player1.player();
 player2.player();
 let turn = player1.player();
+let moves = 0;
 
 const gameLogic = () => {
     const mouseover = () => {
@@ -57,6 +60,8 @@ const gameLogic = () => {
             if (e.target.innerText === '') {
                 e.target.innerText = turn;
                 e.target.style.background = 'white';
+                gameOver();
+                moves++;
                 changeTurn();
                 }
         });
@@ -73,10 +78,84 @@ const gameLogic = () => {
     };
 
     const gameOver = () => {
-        
+        //first col
+        if(allcols[0].innerText === player1.player() && allcols[1].innerText === player1.player() && allcols[2].innerText === player1.player() ) {
+            alert(player1.Name() +" Wins!");
+        }
+        if(allcols[0].innerText === player2.player() && allcols[1].innerText === player2.player() && allcols[2].innerText === player2.player() ) {
+            alert(player2.Name() +" Wins!");
+        }
+        //second col
+        if(allcols[3].innerText === player1.player() && allcols[4].innerText === player1.player() && allcols[5].innerText === player1.player() ) {
+            alert(player1.Name() +" Wins!");
+        }
+        if(allcols[3].innerText === player2.player() && allcols[4].innerText === player2.player() && allcols[5].innerText === player2.player() ) {
+            alert(player2.Name() +" Wins!");
+        }
+        //third col
+        if(allcols[6].innerText === player1.player() && allcols[7].innerText === player1.player() && allcols[8].innerText === player1.player() ) {
+            alert(player1.Name() +" Wins!");
+        }
+        if(allcols[6].innerText === player2.player() && allcols[7].innerText === player2.player() && allcols[8].innerText === player2.player() ) {
+            alert(player2.Name() +" Wins!");
+        }
+        //first row
+        if(allcols[0].innerText === player1.player() && allcols[3].innerText === player1.player() && allcols[6].innerText === player1.player() ) {
+            alert(player1.Name() +" Wins!");
+        }
+        if(allcols[0].innerText === player2.player() && allcols[3].innerText === player2.player() && allcols[6].innerText === player2.player() ) {
+            alert(player2.Name() +" Wins!");
+        }
+        //second row
+        if(allcols[1].innerText === player1.player() && allcols[4].innerText === player1.player() && allcols[7].innerText === player1.player() ) {
+            alert(player1.Name() +" Wins!");
+        }
+        if(allcols[1].innerText === player2.player() && allcols[4].innerText === player2.player() && allcols[7].innerText === player2.player() ) {
+            alert(player2.Name() +" Wins!");
+        }
+        //third row
+        if(allcols[2].innerText === player1.player() && allcols[5].innerText === player1.player() && allcols[8].innerText === player1.player() ) {
+            alert(player1.Name() +" Wins!");
+        }
+        if(allcols[2].innerText === player2.player() && allcols[5].innerText === player2.player() && allcols[8].innerText === player2.player() ) {
+            alert(player2.Name() +" Wins!");
+        }
+        //diagonal 1
+        if(allcols[2].innerText === player1.player() && allcols[4].innerText === player1.player() && allcols[6].innerText === player1.player() ) {
+            alert(player1.Name() +" Wins!");
+        }
+        if(allcols[2].innerText === player2.player() && allcols[4].innerText === player2.player() && allcols[6].innerText === player2.player() ) {
+            alert(player2.Name() +" Wins!");
+        }
+        //diagonal 2
+        if(allcols[0].innerText === player1.player() && allcols[4].innerText === player1.player() && allcols[8].innerText === player1.player() ) {
+            alert(player1.Name() +" Wins!");
+        }
+        if(allcols[0].innerText === player2.player() && allcols[4].innerText === player2.player() && allcols[8].innerText === player2.player() ) {
+            alert(player2.Name() +" Wins!");
+        }
+        //tie
+        console.log(moves);
+        if(moves === 8) {
+            alert("Tie!");
+            moves = 0;
+        }
+
     };
+
+    const restartGame = () => {
+        restartbtn.addEventListener('click', function(e){
+            
+        });
+    }
+
     return { mouseover, mouseclick };
 }
+
+
+
+let allcols = document.querySelectorAll('.row > .col');
+console.log(allcols);
 
 const control = gameLogic();
 control.mouseover();
