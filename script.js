@@ -1,4 +1,4 @@
-const container = document.querySelector('.container');
+let container = document.querySelector('.container');
 const restartbtn = document.querySelector('.restartbtn');
 
 const gameBoard = (() => {
@@ -32,8 +32,8 @@ const playerFactory = (name, playerToken) => {
     return { player, Name };
 }
 
-const player1 = playerFactory(prompt("Enter your name for player1"),'X');
-const player2 = playerFactory(prompt("Enter your name for player2"), 'O');
+let player1 = playerFactory(prompt("Enter your name for player1"),'X');
+let player2 = playerFactory(prompt("Enter your name for player2"), 'O');
 
 player1.player();
 player2.player();
@@ -143,13 +143,25 @@ const gameLogic = () => {
 
     };
 
+    //figure this out, gameboard not being created
     const restartGame = () => {
         restartbtn.addEventListener('click', function(e){
-            
+            container.remove();
+            container = document.createElement('div');
+            container.classList.add('container');
+            document.body.appendChild(container);
+            moves = 0;
+            player1 = playerFactory(prompt("Enter your name for player1"),'X');
+            player2 = playerFactory(prompt("Enter your name for player2"), 'O');
+            gameBoard.create();
+            control.mouseover();
+            control.mouseclick();
+            control.restartGame();
+            allcols = document.querySelectorAll('.row > .col');
         });
     }
 
-    return { mouseover, mouseclick };
+    return { mouseover, mouseclick, restartGame };
 }
 
 
@@ -160,4 +172,5 @@ console.log(allcols);
 const control = gameLogic();
 control.mouseover();
 control.mouseclick();
+control.restartGame();
 
